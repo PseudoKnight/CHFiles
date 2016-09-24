@@ -51,7 +51,7 @@ public class write_file extends AbstractFunction {
             if(!loc.exists()) {
                 throw new CREIOException(loc.getAbsolutePath() + "Doesn't exists", t);
             }
-                if(args.length == 3 && args[2].val().toUpperCase() == "OVERWRITE") {
+                if(args.length == 3 && args[2].val().toUpperCase().equals("OVERWRITE")) {
                     FileUtil.write(args[1].val(), loc, 0);
                 } else {
                     FileUtil.write(args[1].val(), loc, 1);
