@@ -4,7 +4,6 @@ import com.laytonsmith.PureUtilities.SimpleVersion;
 import com.laytonsmith.PureUtilities.Version;
 import com.laytonsmith.annotations.api;
 import com.laytonsmith.core.Security;
-import com.laytonsmith.core.constructs.CBoolean;
 import com.laytonsmith.core.constructs.CVoid;
 import com.laytonsmith.core.constructs.Construct;
 import com.laytonsmith.core.constructs.Target;
@@ -48,13 +47,13 @@ public class copy_file extends AbstractFunction {
     public Construct exec(Target t, Environment env, Construct... args) throws ConfigRuntimeException {
         File fromLoc = new File(t.file().getParentFile(), args[0].val());
         File toLoc = new File(t.file().getParentFile(), args[1].val());
-        if(!Security.CheckSecurity(fromLoc) || !Security.CheckSecurity(toLoc)) {
+        if (!Security.CheckSecurity(fromLoc) || !Security.CheckSecurity(toLoc)) {
             throw new CRESecurityException("You do not have access to some of the files", t);
         }
         try {
-            if(fromLoc.isDirectory()) {
+            if (fromLoc.isDirectory()) {
                 FileUtils.copyDirectory(fromLoc, toLoc);
-            } else if(fromLoc.isFile()) {
+            } else if (fromLoc.isFile()) {
                 FileUtils.copyFile(fromLoc, toLoc);
             }
             return CVoid.VOID;

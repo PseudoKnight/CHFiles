@@ -40,7 +40,7 @@ public class is_dir extends AbstractFunction {
     @Override
     public Construct exec(Target t, Environment env, Construct... args) throws ConfigRuntimeException {
         File loc = new File(t.file().getParentFile(), args[0].val());
-        if(!Security.CheckSecurity(loc)) {
+        if (!Security.CheckSecurity(loc)) {
             throw new CRESecurityException("You do not have permission to access the file '" + loc.getAbsolutePath() + "'", t);
         }
         return CBoolean.get(loc.isDirectory());

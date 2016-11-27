@@ -44,18 +44,18 @@ public class write_file extends AbstractFunction {
     @Override
     public Construct exec(Target t, Environment env, Construct... args) throws ConfigRuntimeException {
         File loc = new File(t.file().getParentFile(), args[0].val());
-        if(!Security.CheckSecurity(loc)) {
+        if (!Security.CheckSecurity(loc)) {
             throw new CRESecurityException("You do not have permission to access the file '" + loc.getAbsolutePath() + "'", t);
         }
         try {
-            if(!loc.exists()) {
+            if (!loc.exists()) {
                 throw new CREIOException(loc.getAbsolutePath() + "Doesn't exists", t);
             }
-                if(args.length == 3 && args[2].val().toUpperCase().equals("OVERWRITE")) {
-                    FileUtil.write(args[1].val(), loc, 0);
-                } else {
-                    FileUtil.write(args[1].val(), loc, 1);
-                }
+            if (args.length == 3 && args[2].val().toUpperCase().equals("OVERWRITE")) {
+                FileUtil.write(args[1].val(), loc, 0);
+            } else {
+                FileUtil.write(args[1].val(), loc, 1);
+            }
 
             return CVoid.VOID;
         } catch (IOException e) {

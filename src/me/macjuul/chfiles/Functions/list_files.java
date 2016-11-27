@@ -4,7 +4,10 @@ import com.laytonsmith.PureUtilities.SimpleVersion;
 import com.laytonsmith.PureUtilities.Version;
 import com.laytonsmith.annotations.api;
 import com.laytonsmith.core.Security;
-import com.laytonsmith.core.constructs.*;
+import com.laytonsmith.core.constructs.CArray;
+import com.laytonsmith.core.constructs.CString;
+import com.laytonsmith.core.constructs.Construct;
+import com.laytonsmith.core.constructs.Target;
 import com.laytonsmith.core.environments.Environment;
 import com.laytonsmith.core.exceptions.CRE.CREIOException;
 import com.laytonsmith.core.exceptions.CRE.CRESecurityException;
@@ -40,13 +43,13 @@ public class list_files extends AbstractFunction {
     @Override
     public Construct exec(Target t, Environment env, Construct... args) throws ConfigRuntimeException {
         File loc = new File(t.file().getParentFile(), args[0].val());
-        if(!Security.CheckSecurity(loc)) {
+        if (!Security.CheckSecurity(loc)) {
             throw new CRESecurityException("You do not have permission to access the file '" + loc.getAbsolutePath() + "'", t);
         }
         CArray ret = new CArray(t);
-        if(loc.exists() && loc.isDirectory()) {
+        if (loc.exists() && loc.isDirectory()) {
             String[] list = loc.list();
-            for(String file:list) {
+            for (String file : list) {
                 ret.push(new CString(file, t), t);
             }
         } else {

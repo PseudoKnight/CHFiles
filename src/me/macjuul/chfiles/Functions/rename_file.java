@@ -13,10 +13,8 @@ import com.laytonsmith.core.exceptions.CRE.CRESecurityException;
 import com.laytonsmith.core.exceptions.CRE.CREThrowable;
 import com.laytonsmith.core.exceptions.ConfigRuntimeException;
 import com.laytonsmith.core.functions.AbstractFunction;
-import com.laytonsmith.libs.org.apache.commons.io.FileUtils;
 
 import java.io.File;
-import java.io.IOException;
 
 /**
  * Created by bexco on 2016-03-16.
@@ -44,15 +42,15 @@ public class rename_file extends AbstractFunction {
     @Override
     public Construct exec(Target t, Environment env, Construct... args) throws ConfigRuntimeException {
         File loc = new File(t.file().getParentFile(), args[0].val());
-        if(!Security.CheckSecurity(loc)) {
+        if (!Security.CheckSecurity(loc)) {
             throw new CRESecurityException("You do not have permission to access the file '" + loc.getAbsolutePath() + "'", t);
         }
-        if(!loc.exists()) {
+        if (!loc.exists()) {
             throw new CREIOException(loc.getAbsolutePath() + "Doesn't exists", t);
         }
-        if(loc.isDirectory()) {
+        if (loc.isDirectory()) {
             loc.renameTo(new File(loc.getParent() + File.pathSeparator + args[1].val() + File.pathSeparator));
-        } else if(loc.isFile()) {
+        } else if (loc.isFile()) {
             loc.renameTo(new File(loc.getParent() + File.pathSeparator + args[1].val()));
         }
         return CVoid.VOID;
