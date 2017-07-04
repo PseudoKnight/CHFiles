@@ -14,6 +14,7 @@ import com.laytonsmith.core.exceptions.CRE.CRESecurityException;
 import com.laytonsmith.core.exceptions.CRE.CREThrowable;
 import com.laytonsmith.core.exceptions.ConfigRuntimeException;
 import com.laytonsmith.core.functions.AbstractFunction;
+import me.macjuul.chfiles.ConstructUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -43,15 +44,16 @@ public class write_file extends AbstractFunction {
 
     @Override
     public Construct exec(Target t, Environment env, Construct... args) throws ConfigRuntimeException {
-        File loc = new File(t.file().getParentFile(), args[0].val());
+        File loc = ConstructUtils.getFile(args[0], t);
         if (!Security.CheckSecurity(loc)) {
             throw new CRESecurityException("You do not have permission to access the file '" + loc.getAbsolutePath() + "'", t);
         }
         try {
             if (!loc.exists()) {
-                throw new CREIOException(loc.getAbsolutePath() + "Doesn't exists", t);
+//                throw new CREIOException(loc.getAbsolutePath() + "Doesn't exists", t);
+                loc.createNewFile();
             }
-            if (args.length == 3 && args[2].val().toUpperCase().equals("OVERWRITE")) {
+            if (args.length >= 3 && args[2].val().toUpperCase().equals("OVERWRITE")) {
                 FileUtil.write(args[1].val(), loc, 0);
             } else {
                 FileUtil.write(args[1].val(), loc, 1);
@@ -70,12 +72,14 @@ public class write_file extends AbstractFunction {
 
     @Override
     public Integer[] numArgs() {
-        return new Integer[]{2, 3};
+        return new Integer[]{2, 3, 4};
     }
 
     @Override
     public String docs() {
-        return "{file, string, [mode]} void write string in file. mode is optional, can be OVERWRITE or APPEND";
+        return "{file, string, [mode]} " +
+                "void write string in file. mode and strict is optional, can be OVERWRITE or APPEND. " +
+                "if strict is true and file doesn't exist, will throw an IOException.";
     }
 
     @Override

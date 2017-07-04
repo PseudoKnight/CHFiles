@@ -15,6 +15,7 @@ import com.laytonsmith.core.exceptions.CRE.CREThrowable;
 import com.laytonsmith.core.exceptions.ConfigRuntimeException;
 import com.laytonsmith.core.functions.AbstractFunction;
 import com.laytonsmith.libs.org.apache.commons.io.FileUtils;
+import me.macjuul.chfiles.ConstructUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -45,8 +46,8 @@ public class copy_file extends AbstractFunction {
 
     @Override
     public Construct exec(Target t, Environment env, Construct... args) throws ConfigRuntimeException {
-        File fromLoc = new File(t.file().getParentFile(), args[0].val());
-        File toLoc = new File(t.file().getParentFile(), args[1].val());
+        File fromLoc = ConstructUtils.getFile(args[0], t);
+        File toLoc = ConstructUtils.getFile(args[1], t);
         if (!Security.CheckSecurity(fromLoc) || !Security.CheckSecurity(toLoc)) {
             throw new CRESecurityException("You do not have access to some of the files", t);
         }
