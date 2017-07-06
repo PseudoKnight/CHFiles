@@ -1,6 +1,7 @@
 package me.macjuul.chfiles.Functions;
 
 import com.laytonsmith.PureUtilities.Version;
+import com.laytonsmith.annotations.api;
 import com.laytonsmith.core.CHVersion;
 import com.laytonsmith.core.constructs.CString;
 import com.laytonsmith.core.constructs.Construct;
@@ -14,6 +15,7 @@ import me.macjuul.chfiles.ConstructUtils;
 /**
  * Created by Junhyeong Lim on 2017-07-05.
  */
+@api
 public class get_absolute_path extends AbstractFunction {
     @Override
     public Class<? extends CREThrowable>[] thrown() {
