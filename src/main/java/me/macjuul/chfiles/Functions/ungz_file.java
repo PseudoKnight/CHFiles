@@ -21,7 +21,7 @@ import java.util.zip.GZIPInputStream;
  */
 
 @api
-public class Ungz_file extends AbstractFunction {
+public class ungz_file extends AbstractFunction {
 
     @SuppressWarnings("unchecked")
     @Override
