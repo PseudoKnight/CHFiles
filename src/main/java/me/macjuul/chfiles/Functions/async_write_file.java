@@ -18,7 +18,6 @@ import com.laytonsmith.core.exceptions.CRE.CRESecurityException;
 import com.laytonsmith.core.exceptions.CRE.CREThrowable;
 import com.laytonsmith.core.exceptions.ConfigRuntimeException;
 import com.laytonsmith.core.functions.AbstractFunction;
-import me.macjuul.chfiles.ConstructUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -30,7 +29,7 @@ import java.io.IOException;
 public class async_write_file extends AbstractFunction {
     @Override
     public Construct exec(final Target t, final Environment env, final Construct... args) throws ConfigRuntimeException {
-        final File loc = ConstructUtils.getFile(args[0], t);
+        final File loc = Static.GetFileFromArgument(args[0].val(), env, t, null);
         if (!Security.CheckSecurity(loc)) {
             throw new CRESecurityException("You do not have permission to access the file '" + loc.getAbsolutePath() + "'", t);
         }

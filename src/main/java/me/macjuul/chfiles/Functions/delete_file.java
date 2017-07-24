@@ -4,6 +4,7 @@ import com.laytonsmith.PureUtilities.SimpleVersion;
 import com.laytonsmith.PureUtilities.Version;
 import com.laytonsmith.annotations.api;
 import com.laytonsmith.core.Security;
+import com.laytonsmith.core.Static;
 import com.laytonsmith.core.constructs.CVoid;
 import com.laytonsmith.core.constructs.Construct;
 import com.laytonsmith.core.constructs.Target;
@@ -14,7 +15,6 @@ import com.laytonsmith.core.exceptions.CRE.CREThrowable;
 import com.laytonsmith.core.exceptions.ConfigRuntimeException;
 import com.laytonsmith.core.functions.AbstractFunction;
 import com.laytonsmith.libs.org.apache.commons.io.FileUtils;
-import me.macjuul.chfiles.ConstructUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -44,7 +44,7 @@ public class delete_file extends AbstractFunction {
 
     @Override
     public Construct exec(Target t, Environment env, Construct... args) throws ConfigRuntimeException {
-        File loc = ConstructUtils.getFile(args[0], t);
+        File loc = Static.GetFileFromArgument(args[0].val(), env, t, null);
         if (!Security.CheckSecurity(loc)) {
             throw new CRESecurityException("You do not have permission to access the file '" + loc.getAbsolutePath() + "'", t);
         }
