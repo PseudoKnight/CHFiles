@@ -12,7 +12,7 @@ Latest release: [v2.2.2](https://github.com/steakteam/CHFiles/releases/tag/v2.2.
 
 * **list_files(PathToDirectory)** - Lists all files and directories in given directory
 
-* **rename_file(PathToFile)** - Rename a file
+* **rename_file(File, Name)** - Rename a file.
 
 * **write_file(PathToFile, content, [mode])** - Write text to a file. mode is optional, can be OVERWRITE or APPEND.
 
