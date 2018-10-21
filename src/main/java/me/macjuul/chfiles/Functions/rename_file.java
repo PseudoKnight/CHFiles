@@ -50,9 +50,9 @@ public class rename_file extends AbstractFunction {
             throw new CREIOException(loc.getAbsolutePath() + "Doesn't exists", t);
         }
         if (loc.isDirectory()) {
-            loc.renameTo(new File(loc.getParent() + File.pathSeparator + args[1].val() + File.pathSeparator));
+            loc.renameTo(new File(loc.getParent() + File.separator + args[1].val() + File.separator));
         } else if (loc.isFile()) {
-            loc.renameTo(new File(loc.getParent() + File.pathSeparator + args[1].val()));
+            loc.renameTo(new File(loc.getParent() + File.separator + args[1].val()));
         }
         return CVoid.VOID;
     }
@@ -64,7 +64,7 @@ public class rename_file extends AbstractFunction {
 
     @Override
     public Integer[] numArgs() {
-        return new Integer[]{1};
+        return new Integer[]{2};
     }
 
     @Override
