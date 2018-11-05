@@ -22,58 +22,58 @@ import java.io.File;
  */
 @api
 public class rename_file extends AbstractFunction {
-    @Override
-    public Class<? extends CREThrowable>[] thrown() {
-        return new Class[]{
-                CREIOException.class,
-                CRESecurityException.class
-        };
-    }
+	@Override
+	public Class<? extends CREThrowable>[] thrown() {
+		return new Class[]{
+				CREIOException.class,
+				CRESecurityException.class
+		};
+	}
 
-    @Override
-    public boolean isRestricted() {
-        return true;
-    }
+	@Override
+	public boolean isRestricted() {
+		return true;
+	}
 
-    @Override
-    public Boolean runAsync() {
-        return null;
-    }
+	@Override
+	public Boolean runAsync() {
+		return null;
+	}
 
-    @Override
-    public Construct exec(Target t, Environment env, Construct... args) throws ConfigRuntimeException {
-        File loc = Static.GetFileFromArgument(args[0].val(), env, t, null);
-        if (!Security.CheckSecurity(loc)) {
-            throw new CRESecurityException("You do not have permission to access the file '" + loc.getAbsolutePath() + "'", t);
-        }
-        if (!loc.exists()) {
-            throw new CREIOException(loc.getAbsolutePath() + " doesn't exist", t);
-        }
-        if (loc.isDirectory()) {
-            loc.renameTo(new File(loc.getParent() + File.separator + args[1].val() + File.separator));
-        } else if (loc.isFile()) {
-            loc.renameTo(new File(loc.getParent() + File.separator + args[1].val()));
-        }
-        return CVoid.VOID;
-    }
+	@Override
+	public Construct exec(Target t, Environment env, Construct... args) throws ConfigRuntimeException {
+		File loc = Static.GetFileFromArgument(args[0].val(), env, t, null);
+		if (!Security.CheckSecurity(loc)) {
+			throw new CRESecurityException("You do not have permission to access the file '" + loc.getAbsolutePath() + "'", t);
+		}
+		if (!loc.exists()) {
+			throw new CREIOException(loc.getAbsolutePath() + " doesn't exist", t);
+		}
+		if (loc.isDirectory()) {
+			loc.renameTo(new File(loc.getParent() + File.separator + args[1].val() + File.separator));
+		} else if (loc.isFile()) {
+			loc.renameTo(new File(loc.getParent() + File.separator + args[1].val()));
+		}
+		return CVoid.VOID;
+	}
 
-    @Override
-    public String getName() {
-        return "rename_file";
-    }
+	@Override
+	public String getName() {
+		return "rename_file";
+	}
 
-    @Override
-    public Integer[] numArgs() {
-        return new Integer[]{2};
-    }
+	@Override
+	public Integer[] numArgs() {
+		return new Integer[]{2};
+	}
 
-    @Override
-    public String docs() {
-        return "void {file, name} Renames a file.";
-    }
+	@Override
+	public String docs() {
+		return "void {file, name} Renames a file.";
+	}
 
-    @Override
-    public Version since() {
-        return new SimpleVersion(1, 0, 0);
-    }
+	@Override
+	public Version since() {
+		return new SimpleVersion(1, 0, 0);
+	}
 }

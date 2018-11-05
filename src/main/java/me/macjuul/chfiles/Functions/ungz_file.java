@@ -24,71 +24,71 @@ import java.util.zip.GZIPInputStream;
 @api
 public class ungz_file extends AbstractFunction {
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public Class<? extends CREThrowable>[] thrown() {
-        return new Class[]{
-                CREIOException.class
-        };
-    }
+	@SuppressWarnings("unchecked")
+	@Override
+	public Class<? extends CREThrowable>[] thrown() {
+		return new Class[]{
+				CREIOException.class
+		};
+	}
 
-    @Override
-    public boolean isRestricted() {
-        return true;
-    }
+	@Override
+	public boolean isRestricted() {
+		return true;
+	}
 
-    @Override
-    public Boolean runAsync() {
-        return null;
-    }
+	@Override
+	public Boolean runAsync() {
+		return null;
+	}
 
-    @Override
-    public Construct exec(Target t, Environment env, Construct... args) throws ConfigRuntimeException {
+	@Override
+	public Construct exec(Target t, Environment env, Construct... args) throws ConfigRuntimeException {
 
-        File gz = Static.GetFileFromArgument(args[0].val(), env, t, null);
-        File tofile = Static.GetFileFromArgument(args[1].val(), env, t, null);
+		File gz = Static.GetFileFromArgument(args[0].val(), env, t, null);
+		File tofile = Static.GetFileFromArgument(args[1].val(), env, t, null);
 
-        try {
-            FileInputStream fis = new FileInputStream(gz);
-            GZIPInputStream gzis = new GZIPInputStream(fis);
+		try {
+			FileInputStream fis = new FileInputStream(gz);
+			GZIPInputStream gzis = new GZIPInputStream(fis);
 
-            byte[] buffer = new byte[1024];
-            int length;
+			byte[] buffer = new byte[1024];
+			int length;
 
-            FileOutputStream fos = new FileOutputStream(tofile);
+			FileOutputStream fos = new FileOutputStream(tofile);
 
-            while ((length = gzis.read(buffer)) > 0) {
-                fos.write(buffer, 0, length);
-            }
+			while ((length = gzis.read(buffer)) > 0) {
+				fos.write(buffer, 0, length);
+			}
 
-            fos.close();
-            gzis.close();
-            fis.close();
+			fos.close();
+			gzis.close();
+			fis.close();
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
-        return null;
-    }
+		return null;
+	}
 
-    @Override
-    public Version since() {
-        return new SimpleVersion(1, 0, 0);
-    }
+	@Override
+	public Version since() {
+		return new SimpleVersion(1, 0, 0);
+	}
 
-    @Override
-    public String getName() {
-        return "ungz_file";
-    }
+	@Override
+	public String getName() {
+		return "ungz_file";
+	}
 
-    @Override
-    public Integer[] numArgs() {
-        return new Integer[]{2};
-    }
+	@Override
+	public Integer[] numArgs() {
+		return new Integer[]{2};
+	}
 
-    @Override
-    public String docs() {
-        return "void (gzfile, tofile) Unzip a file and write it to another file.";
-    }
+	@Override
+	public String docs() {
+		return "void (gzfile, tofile) Unzip a file and write it to another file.";
+	}
 }

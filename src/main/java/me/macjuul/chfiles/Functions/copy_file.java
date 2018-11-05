@@ -25,61 +25,61 @@ import java.io.IOException;
  */
 @api
 public class copy_file extends AbstractFunction {
-    @Override
-    public Class<? extends CREThrowable>[] thrown() {
-        return new Class[]{
-                CREFormatException.class,
-                CREIOException.class,
-                CRESecurityException.class
-        };
-    }
+	@Override
+	public Class<? extends CREThrowable>[] thrown() {
+		return new Class[]{
+				CREFormatException.class,
+				CREIOException.class,
+				CRESecurityException.class
+		};
+	}
 
-    @Override
-    public boolean isRestricted() {
-        return true;
-    }
+	@Override
+	public boolean isRestricted() {
+		return true;
+	}
 
-    @Override
-    public Boolean runAsync() {
-        return null;
-    }
+	@Override
+	public Boolean runAsync() {
+		return null;
+	}
 
-    @Override
-    public Construct exec(Target t, Environment env, Construct... args) throws ConfigRuntimeException {
-        File fromLoc = Static.GetFileFromArgument(args[0].val(), env, t, null);
-        File toLoc = Static.GetFileFromArgument(args[1].val(), env, t, null);
-        if (!Security.CheckSecurity(fromLoc) || !Security.CheckSecurity(toLoc)) {
-            throw new CRESecurityException("You do not have access to some of the files", t);
-        }
-        try {
-            if (fromLoc.isDirectory()) {
-                FileUtils.copyDirectory(fromLoc, toLoc);
-            } else if (fromLoc.isFile()) {
-                FileUtils.copyFile(fromLoc, toLoc);
-            }
-            return CVoid.VOID;
-        } catch (IOException e) {
-            throw new CREIOException("File could not be written in.", t);
-        }
-    }
+	@Override
+	public Construct exec(Target t, Environment env, Construct... args) throws ConfigRuntimeException {
+		File fromLoc = Static.GetFileFromArgument(args[0].val(), env, t, null);
+		File toLoc = Static.GetFileFromArgument(args[1].val(), env, t, null);
+		if (!Security.CheckSecurity(fromLoc) || !Security.CheckSecurity(toLoc)) {
+			throw new CRESecurityException("You do not have access to some of the files", t);
+		}
+		try {
+			if (fromLoc.isDirectory()) {
+				FileUtils.copyDirectory(fromLoc, toLoc);
+			} else if (fromLoc.isFile()) {
+				FileUtils.copyFile(fromLoc, toLoc);
+			}
+			return CVoid.VOID;
+		} catch (IOException e) {
+			throw new CREIOException("File could not be written in.", t);
+		}
+	}
 
-    @Override
-    public String getName() {
-        return "copy_file";
-    }
+	@Override
+	public String getName() {
+		return "copy_file";
+	}
 
-    @Override
-    public Integer[] numArgs() {
-        return new Integer[]{2};
-    }
+	@Override
+	public Integer[] numArgs() {
+		return new Integer[]{2};
+	}
 
-    @Override
-    public String docs() {
-        return "void {file, dir | dir, dir} Copies a file or directory to another directory.";
-    }
+	@Override
+	public String docs() {
+		return "void {file, dir | dir, dir} Copies a file or directory to another directory.";
+	}
 
-    @Override
-    public Version since() {
-        return new SimpleVersion(1, 0, 0);
-    }
+	@Override
+	public Version since() {
+		return new SimpleVersion(1, 0, 0);
+	}
 }

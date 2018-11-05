@@ -17,47 +17,47 @@ import com.laytonsmith.core.functions.AbstractFunction;
  */
 @api
 public class get_absolute_path extends AbstractFunction {
-    @Override
-    public Class<? extends CREThrowable>[] thrown() {
-        return new Class[0];
-    }
+	@Override
+	public Class<? extends CREThrowable>[] thrown() {
+		return new Class[0];
+	}
 
-    @Override
-    public boolean isRestricted() {
-        return true;
-    }
+	@Override
+	public boolean isRestricted() {
+		return true;
+	}
 
-    @Override
-    public Boolean runAsync() {
-        return null;
-    }
+	@Override
+	public Boolean runAsync() {
+		return null;
+	}
 
-    @Override
-    public Construct exec(Target t, Environment env, Construct... args) throws ConfigRuntimeException {
-        String path = args.length == 0 ?
-                t.file().getParentFile().getAbsolutePath() :
-                Static.GetFileFromArgument(args[0].val(), env, t, null).getAbsolutePath();
+	@Override
+	public Construct exec(Target t, Environment env, Construct... args) throws ConfigRuntimeException {
+		String path = args.length == 0 ?
+				t.file().getParentFile().getAbsolutePath() :
+				Static.GetFileFromArgument(args[0].val(), env, t, null).getAbsolutePath();
 
-        return new CString(path, t);
-    }
+		return new CString(path, t);
+	}
 
-    @Override
-    public Version since() {
-        return CHVersion.V3_3_2;
-    }
+	@Override
+	public Version since() {
+		return CHVersion.V3_3_2;
+	}
 
-    @Override
-    public String getName() {
-        return "get_absolute_path";
-    }
+	@Override
+	public String getName() {
+		return "get_absolute_path";
+	}
 
-    @Override
-    public Integer[] numArgs() {
-        return new Integer[]{0, 1};
-    }
+	@Override
+	public Integer[] numArgs() {
+		return new Integer[]{0, 1};
+	}
 
-    @Override
-    public String docs() {
-        return "string {[file]} Gets the absolute path of a file, or this script file if none is specified.";
-    }
+	@Override
+	public String docs() {
+		return "string {[file]} Gets the absolute path of a file, or this script file if none is specified.";
+	}
 }

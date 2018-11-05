@@ -24,62 +24,62 @@ import java.io.IOException;
  */
 @api
 public class delete_file extends AbstractFunction {
-    @Override
-    public Class<? extends CREThrowable>[] thrown() {
-        return new Class[]{
-                CREIOException.class,
-                CRESecurityException.class
-        };
-    }
+	@Override
+	public Class<? extends CREThrowable>[] thrown() {
+		return new Class[]{
+				CREIOException.class,
+				CRESecurityException.class
+		};
+	}
 
-    @Override
-    public boolean isRestricted() {
-        return true;
-    }
+	@Override
+	public boolean isRestricted() {
+		return true;
+	}
 
-    @Override
-    public Boolean runAsync() {
-        return null;
-    }
+	@Override
+	public Boolean runAsync() {
+		return null;
+	}
 
-    @Override
-    public Construct exec(Target t, Environment env, Construct... args) throws ConfigRuntimeException {
-        File loc = Static.GetFileFromArgument(args[0].val(), env, t, null);
-        if (!Security.CheckSecurity(loc)) {
-            throw new CRESecurityException("You do not have permission to access the file '" + loc.getAbsolutePath() + "'", t);
-        }
-        try {
-            if (!loc.exists()) {
-                throw new CREIOException(loc.getAbsolutePath() + "Doesn't exists", t);
-            }
-            if (loc.isDirectory()) {
-                FileUtils.deleteDirectory(loc);
-            } else if (loc.isFile()) {
-                FileUtils.forceDelete(loc);
-            }
-            return CVoid.VOID;
-        } catch (IOException e) {
-            throw new CREIOException("File could not be deleted.", t);
-        }
-    }
+	@Override
+	public Construct exec(Target t, Environment env, Construct... args) throws ConfigRuntimeException {
+		File loc = Static.GetFileFromArgument(args[0].val(), env, t, null);
+		if (!Security.CheckSecurity(loc)) {
+			throw new CRESecurityException("You do not have permission to access the file '" + loc.getAbsolutePath() + "'", t);
+		}
+		try {
+			if (!loc.exists()) {
+				throw new CREIOException(loc.getAbsolutePath() + "Doesn't exists", t);
+			}
+			if (loc.isDirectory()) {
+				FileUtils.deleteDirectory(loc);
+			} else if (loc.isFile()) {
+				FileUtils.forceDelete(loc);
+			}
+			return CVoid.VOID;
+		} catch (IOException e) {
+			throw new CREIOException("File could not be deleted.", t);
+		}
+	}
 
-    @Override
-    public String getName() {
-        return "delete_file";
-    }
+	@Override
+	public String getName() {
+		return "delete_file";
+	}
 
-    @Override
-    public Integer[] numArgs() {
-        return new Integer[]{1};
-    }
+	@Override
+	public Integer[] numArgs() {
+		return new Integer[]{1};
+	}
 
-    @Override
-    public String docs() {
-        return "void {file} Deletes a file or directory.";
-    }
+	@Override
+	public String docs() {
+		return "void {file} Deletes a file or directory.";
+	}
 
-    @Override
-    public Version since() {
-        return new SimpleVersion(1, 0, 0);
-    }
+	@Override
+	public Version since() {
+		return new SimpleVersion(1, 0, 0);
+	}
 }

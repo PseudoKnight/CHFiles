@@ -28,14 +28,14 @@ import java.io.IOException;
  */
 @api
 public class async_write_file extends AbstractFunction {
-    @Override
-    public Construct exec(final Target t, final Environment env, final Construct... args) throws ConfigRuntimeException {
-        final File loc = Static.GetFileFromArgument(args[0].val(), env, t, null);
-        if (!Security.CheckSecurity(loc)) {
-            throw new CRESecurityException("You do not have permission to access the file '" + loc.getAbsolutePath() + "'", t);
-        }
+	@Override
+	public Construct exec(final Target t, final Environment env, final Construct... args) throws ConfigRuntimeException {
+		final File loc = Static.GetFileFromArgument(args[0].val(), env, t, null);
+		if (!Security.CheckSecurity(loc)) {
+			throw new CRESecurityException("You do not have permission to access the file '" + loc.getAbsolutePath() + "'", t);
+		}
 
-        new Thread(() -> {
+		new Thread(() -> {
 			try {
 				if (!loc.exists()) {
 					loc.createNewFile();
@@ -55,47 +55,47 @@ public class async_write_file extends AbstractFunction {
 			}
 		}).start();
 
-        return CVoid.VOID;
-    }
+		return CVoid.VOID;
+	}
 
-    @Override
-    public String getName() {
-        return "async_write_file";
-    }
+	@Override
+	public String getName() {
+		return "async_write_file";
+	}
 
-    @Override
-    public Integer[] numArgs() {
-        return new Integer[]{2, 3, 4};
-    }
+	@Override
+	public Integer[] numArgs() {
+		return new Integer[]{2, 3, 4};
+	}
 
-    @Override
-    public String docs() {
-        return "void {file, string, [mode], [callback]} Writes text to a file asynchronously."
-                + " The mode parameter can be OVERWRITE or APPEND."
-                + " The optional callback must be a closure. It will be executed upon write completion.";
-    }
+	@Override
+	public String docs() {
+		return "void {file, string, [mode], [callback]} Writes text to a file asynchronously."
+				+ " The mode parameter can be OVERWRITE or APPEND."
+				+ " The optional callback must be a closure. It will be executed upon write completion.";
+	}
 
-    @Override
-    public Class<? extends CREThrowable>[] thrown() {
-        return new Class[]{
-                CREIOException.class, 
-                CRESecurityException.class, 
-                CRECastException.class
-        };
-    }
+	@Override
+	public Class<? extends CREThrowable>[] thrown() {
+		return new Class[]{
+				CREIOException.class, 
+				CRESecurityException.class, 
+				CRECastException.class
+		};
+	}
 
-    @Override
-    public boolean isRestricted() {
-        return true;
-    }
+	@Override
+	public boolean isRestricted() {
+		return true;
+	}
 
-    @Override
-    public Boolean runAsync() {
-        return null;
-    }
+	@Override
+	public Boolean runAsync() {
+		return null;
+	}
 
-    @Override
-    public Version since() {
-        return CHVersion.V3_3_2;
-    }
+	@Override
+	public Version since() {
+		return CHVersion.V3_3_2;
+	}
 }
