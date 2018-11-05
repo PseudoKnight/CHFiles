@@ -7,6 +7,7 @@ import com.laytonsmith.core.Static;
 import com.laytonsmith.core.constructs.Construct;
 import com.laytonsmith.core.constructs.Target;
 import com.laytonsmith.core.environments.Environment;
+import com.laytonsmith.core.exceptions.CRE.CREIOException;
 import com.laytonsmith.core.exceptions.CRE.CREThrowable;
 import com.laytonsmith.core.exceptions.ConfigRuntimeException;
 import com.laytonsmith.core.functions.AbstractFunction;
@@ -26,12 +27,14 @@ public class ungz_file extends AbstractFunction {
     @SuppressWarnings("unchecked")
     @Override
     public Class<? extends CREThrowable>[] thrown() {
-        return new Class[0];
+        return new Class[]{
+                CREIOException.class
+        };
     }
 
     @Override
     public boolean isRestricted() {
-        return false;
+        return true;
     }
 
     @Override

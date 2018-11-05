@@ -13,6 +13,7 @@ import com.laytonsmith.core.constructs.Construct;
 import com.laytonsmith.core.constructs.Target;
 import com.laytonsmith.core.environments.Environment;
 import com.laytonsmith.core.environments.GlobalEnv;
+import com.laytonsmith.core.exceptions.CRE.CRECastException;
 import com.laytonsmith.core.exceptions.CRE.CREIOException;
 import com.laytonsmith.core.exceptions.CRE.CRESecurityException;
 import com.laytonsmith.core.exceptions.CRE.CREThrowable;
@@ -85,8 +86,9 @@ public class async_write_file extends AbstractFunction {
     @Override
     public Class<? extends CREThrowable>[] thrown() {
         return new Class[]{
-                CREIOException.class,
-                CRESecurityException.class
+                CREIOException.class, 
+                CRESecurityException.class, 
+                CRECastException.class
         };
     }
 

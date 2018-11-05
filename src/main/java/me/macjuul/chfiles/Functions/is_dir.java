@@ -35,7 +35,7 @@ public class is_dir extends AbstractFunction {
 
     @Override
     public Boolean runAsync() {
-        return true;
+        return null;
     }
 
     @Override

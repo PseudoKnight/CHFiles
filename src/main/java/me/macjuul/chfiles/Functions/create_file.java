@@ -38,7 +38,7 @@ public class create_file extends AbstractFunction {
 
     @Override
     public Boolean runAsync() {
-        return true;
+        return null;
     }
 
     @Override

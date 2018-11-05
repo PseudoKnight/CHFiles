@@ -14,7 +14,7 @@ import com.laytonsmith.core.exceptions.CRE.CRESecurityException;
 import com.laytonsmith.core.exceptions.CRE.CREThrowable;
 import com.laytonsmith.core.exceptions.ConfigRuntimeException;
 import com.laytonsmith.core.functions.AbstractFunction;
-import com.laytonsmith.libs.org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -39,7 +39,7 @@ public class delete_file extends AbstractFunction {
 
     @Override
     public Boolean runAsync() {
-        return true;
+        return null;
     }
 
     @Override

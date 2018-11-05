@@ -38,7 +38,7 @@ public class list_files extends AbstractFunction {
 
     @Override
     public Boolean runAsync() {
-        return true;
+        return null;
     }
 
     @Override

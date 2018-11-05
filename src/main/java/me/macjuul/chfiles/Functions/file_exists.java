@@ -35,7 +35,7 @@ public class file_exists extends AbstractFunction {
 
     @Override
     public Boolean runAsync() {
-        return true;
+        return null;
     }
 
     @Override

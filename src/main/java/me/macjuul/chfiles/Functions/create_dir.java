@@ -37,7 +37,7 @@ public class create_dir extends AbstractFunction {
 
     @Override
     public Boolean runAsync() {
-        return true;
+        return null;
     }
 
     @Override

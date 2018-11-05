@@ -36,7 +36,10 @@ import java.io.IOException;
 public class async_read_file extends AbstractFunction {
     @Override
     public Class<? extends CREThrowable>[] thrown() {
-        return new Class[]{CRESecurityException.class};
+        return new Class[]{
+                CRESecurityException.class, 
+                CRECastException.class
+        };
     }
 
     @Override
@@ -56,7 +59,7 @@ public class async_read_file extends AbstractFunction {
         if (!(args[1] instanceof CClosure)) {
             throw new CRECastException("Expected paramter 2 of " + getName() + " to be a closure!", t);
         } else {
-            callback = ((CClosure) args[1]);
+            callback = Static.getObject(args[1], t, CClosure.class);
         }
         if (!Static.InCmdLine(environment)) {
             if (!Security.CheckSecurity(file)) {
