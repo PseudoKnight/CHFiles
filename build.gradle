@@ -2,7 +2,7 @@ group 'me.macjuul.chfiles'
 
 apply plugin: 'java'
 
-sourceCompatibility = 1.7
+sourceCompatibility = 1.8
 
 compileJava.options.encoding = 'UTF-8'
 compileJava.dependsOn clean
@@ -10,15 +10,15 @@ compileJava.dependsOn clean
 repositories {
     mavenCentral()
     maven { url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
-    maven { url 'http://mvn2.sk89q.com/repo' }
+    maven { url 'http://maven.sk89q.com/repo' }
     maven { url 'http://repo.dmulloy2.net/content/groups/public/' }
 }
 
 dependencies {
-    compile('org.spigotmc:spigot-api:1.12-R0.1-SNAPSHOT') {
+    compile('org.spigotmc:spigot-api:1.13.1-R0.1-SNAPSHOT') {
         exclude module: 'bungeecord-chat'
     }
-    compile('com.sk89q:commandhelper:3.3.2-SNAPSHOT') {
+    compile('com.sk89q:commandhelper:3.3.3-SNAPSHOT') {
         exclude module: 'spigot-api'
     }
     compile group: 'commons-io', name: 'commons-io', version: '2.5'
