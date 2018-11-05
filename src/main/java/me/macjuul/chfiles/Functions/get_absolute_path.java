@@ -58,7 +58,6 @@ public class get_absolute_path extends AbstractFunction {
 
     @Override
     public String docs() {
-        return "{[file]} " +
-                "string returns the absolute path.";
+        return "string {[file]} Gets the absolute path of a file, or this script file if none is specified.";
     }
 }

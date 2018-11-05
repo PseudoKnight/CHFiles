@@ -59,7 +59,7 @@ public class file_exists extends AbstractFunction {
 
     @Override
     public String docs() {
-        return "{file} boolean if file exists, return true.";
+        return "boolean {path} Check if a file exists.";
     }
 
     @Override

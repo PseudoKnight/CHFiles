@@ -84,11 +84,11 @@ public class ungz_file extends AbstractFunction {
 
     @Override
     public Integer[] numArgs() {
-        return new Integer[]{ 2 };
+        return new Integer[]{2};
     }
 
     @Override
     public String docs() {
-        return "void (gzfile, tofile) gzfile to file";
+        return "void (gzfile, tofile) Unzip a file and write it to another file.";
     }
 }

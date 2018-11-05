@@ -1,31 +1,29 @@
-CHFiles is a CommandHelper extension that allows you to work with files and directory and interact with them from whithin your server.
-
-Latest release: [v2.2.2](https://github.com/steakteam/CHFiles/releases/tag/v2.2.2)
+CHFiles is a CommandHelper extension that allows you to work with files and directory and interact with them from within your server.
 
 # Functions:
 
-* **copy_file(FromFile, ToFile)** - Copy a file (or directory) to another location, with a new name
+* void **copy_file(FromFile, ToFile)** - Copies a file or directory to another directory.
 
-* **create_file(PathToFile)** - Create a new file
+* void **create_file(PathToFile)** - Creates a new file.
 
-* **delete_file(PathToFile)** - Delete an extension file or directory
+* void **delete_file(PathToFile)** - Deletes a file or directory.
 
-* **list_files(PathToDirectory)** - Lists all files and directories in given directory
+* array **list_files(PathToDirectory)** - Lists all files and directories in given directory.
 
-* **rename_file(File, Name)** - Rename a file.
+* void **rename_file(File, Name)** - Renames a file.
 
-* **write_file(PathToFile, content, [mode])** - Write text to a file. mode is optional, can be OVERWRITE or APPEND.
+* void **write_file(PathToFile, content, [mode])** - Writes text to a file. The mode parameter can be OVERWRITE or APPEND.
 
-* **async_write_file(PathToFile, content, [mode], [callback])** - Write text to a file asynchronously. mode is optional, can be OVERWRITE or APPEND.
+* void **async_write_file(PathToFile, content, [mode], [callback])** - Writes text to a file asynchronously. The mode parameter can be OVERWRITE or APPEND.  The optional callback must be a closure. It will be executed upon write completion.
 
-* **async_read_file(PathToFile, callback)** - Asynchronously reads in a file. check [here](http://wiki.sk89q.com/wiki/CommandHelper/Staged/API/async_read)
+* void **async_read_file(PathToFile, callback)** - Asynchronously reads in a file. Check [here](https://methodscript.com/docs/3.3.3/API/functions/async_read).
 
-* **file_exists(Path)** - Check if a file exists, returns true or false
+* boolean **file_exists(Path)** - Check if a file exists.
 
-* **create_dir(PathToDir)** - Create a new directory
+* void **create_dir(PathToDir)** - Create a new directory.
 
-* **is_dir(PathToFile)** - if a file is directory, return true.
+* boolean **is_dir(PathToFile)** - Checks if a path is a directory.
 
-* **is_file(PathToFile)** - if a file is not file, return false.
+* boolean  **is_file(PathToFile)** - Checks if a path is a file.
 
-* **get_absolute_path([Path])** - Returns the absolute path
+* string  **get_absolute_path([Path])** - Gets the absolute path of a file, or this script file if none is specified.

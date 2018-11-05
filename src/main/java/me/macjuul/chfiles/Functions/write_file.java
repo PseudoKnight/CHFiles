@@ -61,7 +61,7 @@ public class write_file extends AbstractFunction {
 
             return CVoid.VOID;
         } catch (IOException e) {
-            throw new CREIOException("File could not be writed.", t);
+            throw new CREIOException("File could not be written.", t);
         }
     }
 
@@ -77,9 +77,8 @@ public class write_file extends AbstractFunction {
 
     @Override
     public String docs() {
-        return "{file, string, [mode]} " +
-                "void write string in file. mode and strict is optional, can be OVERWRITE or APPEND. " +
-                "if strict is true and file doesn't exist, will throw an IOException.";
+        return "void {file, string, [mode]} Writes text to a file."
+                + " The mode parameter can be OVERWRITE or APPEND.";
     }
 
     @Override

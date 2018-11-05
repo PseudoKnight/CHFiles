@@ -35,33 +35,25 @@ public class async_write_file extends AbstractFunction {
             throw new CRESecurityException("You do not have permission to access the file '" + loc.getAbsolutePath() + "'", t);
         }
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    if (!loc.exists()) {
-                        loc.createNewFile();
-                    }
-                    if (args.length >= 3 && args[2].val().toUpperCase().equals("OVERWRITE")) {
-                        FileUtil.write(args[1].val(), loc, 0);
-                    } else {
-                        FileUtil.write(args[1].val(), loc, 1);
-                    }
+        new Thread(() -> {
+			try {
+				if (!loc.exists()) {
+					loc.createNewFile();
+				}
+				if (args.length >= 3 && args[2].val().toUpperCase().equals("OVERWRITE")) {
+					FileUtil.write(args[1].val(), loc, 0);
+				} else {
+					FileUtil.write(args[1].val(), loc, 1);
+				}
 
-                    if (args.length >= 4) {
-                        final CClosure closure = Static.getObject(args[3], t, CClosure.class);
-                        StaticLayer.GetConvertor().runOnMainThreadLater(env.getEnv(GlobalEnv.class).GetDaemonManager(), new Runnable() {
-                            @Override
-                            public void run() {
-                                closure.execute();
-                            }
-                        });
-                    }
-                } catch (IOException e) {
-                    throw new CREIOException("File could not be writed.", t);
-                }
-            }
-        }).start();
+				if (args.length >= 4) {
+					final CClosure closure = Static.getObject(args[3], t, CClosure.class);
+					StaticLayer.GetConvertor().runOnMainThreadLater(env.getEnv(GlobalEnv.class).GetDaemonManager(), closure::execute);
+				}
+			} catch (IOException e) {
+				throw new CREIOException("File could not be written.", t);
+			}
+		}).start();
 
         return CVoid.VOID;
     }
@@ -78,9 +70,9 @@ public class async_write_file extends AbstractFunction {
 
     @Override
     public String docs() {
-        return "{file, string, [mode], [callback]} " +
-                "void write string in file asynchronously. mode and strict is optional, can be OVERWRITE or APPEND. " +
-                "if strict is true and file doesn't exist, will throw an IOException.";
+        return "void {file, string, [mode], [callback]} Writes text to a file asynchronously."
+                + " The mode parameter can be OVERWRITE or APPEND."
+                + " The optional callback must be a closure. It will be executed upon write completion.";
     }
 
     @Override

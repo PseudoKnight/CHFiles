@@ -49,7 +49,7 @@ public class create_file extends AbstractFunction {
         }
         try {
             if (loc.exists()) {
-                throw new CREIOException(loc.getAbsolutePath() + "Already Exists", t);
+                throw new CREIOException(loc.getAbsolutePath() + " already exists", t);
             }
             loc.createNewFile();
             return CVoid.VOID;
@@ -70,7 +70,7 @@ public class create_file extends AbstractFunction {
 
     @Override
     public String docs() {
-        return "{file} void creates a file.";
+        return "void {file} Creates a new file.";
     }
 
     @Override

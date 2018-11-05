@@ -75,7 +75,7 @@ public class delete_file extends AbstractFunction {
 
     @Override
     public String docs() {
-        return "{file} void delete a file.";
+        return "void {file} Deletes a file or directory.";
     }
 
     @Override

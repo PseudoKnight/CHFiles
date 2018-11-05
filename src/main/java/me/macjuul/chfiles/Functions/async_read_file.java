@@ -57,7 +57,7 @@ public class async_read_file extends AbstractFunction {
         final String file = args[0].val();
         final CClosure callback;
         if (!(args[1] instanceof CClosure)) {
-            throw new CRECastException("Expected paramter 2 of " + getName() + " to be a closure!", t);
+            throw new CRECastException("Expected parameter 2 of " + getName() + " to be a closure!", t);
         } else {
             callback = Static.getObject(args[1], t, CClosure.class);
         }
@@ -66,49 +66,40 @@ public class async_read_file extends AbstractFunction {
                 throw new CRESecurityException("You do not have permission to access the file '" + file + "'", t);
             }
         }
-        new Thread(new Runnable() {
-
-            @Override
-            public void run() {
-                String returnString = null;
-                ConfigRuntimeException exception = null;
-                if (file.contains("@")) {
-                    try {
-                        //It's an SCP transfer
-                        returnString = SSHWrapper.SCPReadString(file);
-                    } catch (IOException ex) {
-                        exception = new CREIOException(ex.getMessage(), t, ex);
-                    }
-                } else {
-                    try {
-                        //It's a local file read
-                        File _file = Static.GetFileFromArgument(file, environment, t, null);
-                        returnString = FileUtil.read(_file);
-                    } catch (IOException ex) {
-                        exception = new CREIOException(ex.getMessage(), t, ex);
-                    }
-                }
-                final Construct cret;
-                if (returnString == null) {
-                    cret = CNull.NULL;
-                } else {
-                    cret = new CString(returnString, t);
-                }
-                final Construct cex;
-                if (exception == null) {
-                    cex = CNull.NULL;
-                } else {
-                    cex = ObjectGenerator.GetGenerator().exception(exception, environment, t);
-                }
-                StaticLayer.GetConvertor().runOnMainThreadLater(environment.getEnv(GlobalEnv.class).GetDaemonManager(), new Runnable() {
-
-                    @Override
-                    public void run() {
-                        callback.execute(new Construct[]{cret, cex});
-                    }
-                });
-            }
-        }).start();
+        new Thread(() -> {
+			String returnString = null;
+			ConfigRuntimeException exception = null;
+			if (file.contains("@")) {
+				try {
+					//It's an SCP transfer
+					returnString = SSHWrapper.SCPReadString(file);
+				} catch (IOException ex) {
+					exception = new CREIOException(ex.getMessage(), t, ex);
+				}
+			} else {
+				try {
+					//It's a local file read
+					File _file = Static.GetFileFromArgument(file, environment, t, null);
+					returnString = FileUtil.read(_file);
+				} catch (IOException ex) {
+					exception = new CREIOException(ex.getMessage(), t, ex);
+				}
+			}
+			final Construct cret;
+			if (returnString == null) {
+				cret = CNull.NULL;
+			} else {
+				cret = new CString(returnString, t);
+			}
+			final Construct cex;
+			if (exception == null) {
+				cex = CNull.NULL;
+			} else {
+				cex = ObjectGenerator.GetGenerator().exception(exception, environment, t);
+			}
+			StaticLayer.GetConvertor().runOnMainThreadLater(environment.getEnv(GlobalEnv.class).GetDaemonManager(), () -> 
+					callback.execute(cret, cex));
+		}).start();
         return CVoid.VOID;
     }
 
@@ -132,8 +123,8 @@ public class async_read_file extends AbstractFunction {
                 + " The line endings for the string returned will always be \\n, even if they originally were \\r\\n."
                 + " This method will immediately return, and asynchronously read in the file, and finally send the contents"
                 + " to the callback once the task completes. The callback should have the following signature: closure(@contents, @exception){ &lt;code&gt; }."
-                + " If @contents is null, that indicates that an exception occured, and @exception will not be null, but instead have an"
-                + " exeption array. Otherwise, @contents will contain the file's contents, and @exception will be null. This method is useful"
+                + " If @contents is null, that indicates that an exception occurred, and @exception will not be null, but instead have an"
+                + " exception array. Otherwise, @contents will contain the file's contents, and @exception will be null. This method is useful"
                 + " to use in two cases, either you need a remote file via SCP, or a local file is big enough that you notice a delay when"
                 + " simply using the read() function.";
     }

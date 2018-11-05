@@ -75,7 +75,7 @@ public class copy_file extends AbstractFunction {
 
     @Override
     public String docs() {
-        return "{file | dir, dir} void Copy file or directory to another directory.";
+        return "void {file, dir | dir, dir} Copies a file or directory to another directory.";
     }
 
     @Override

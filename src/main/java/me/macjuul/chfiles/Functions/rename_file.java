@@ -47,7 +47,7 @@ public class rename_file extends AbstractFunction {
             throw new CRESecurityException("You do not have permission to access the file '" + loc.getAbsolutePath() + "'", t);
         }
         if (!loc.exists()) {
-            throw new CREIOException(loc.getAbsolutePath() + "Doesn't exists", t);
+            throw new CREIOException(loc.getAbsolutePath() + " doesn't exist", t);
         }
         if (loc.isDirectory()) {
             loc.renameTo(new File(loc.getParent() + File.separator + args[1].val() + File.separator));
@@ -69,7 +69,7 @@ public class rename_file extends AbstractFunction {
 
     @Override
     public String docs() {
-        return "{file, name} void rename a file.";
+        return "void {file, name} Renames a file.";
     }
 
     @Override

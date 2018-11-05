@@ -14,11 +14,11 @@ public class LifeCycle extends AbstractExtension {
 
 
     public void onStartup() {
-        System.out.println("CHFiles " + getVersion() + " has sucessfully been enabled!");
+        System.out.println("CHFiles " + getVersion() + " has successfully been enabled!");
     }
 
     public void onShutdown() {
-        System.out.println("CHFiles " + getVersion() + " has sucessfully been disabled!");
+        System.out.println("CHFiles " + getVersion() + " has successfully been disabled!");
 
     }
 }

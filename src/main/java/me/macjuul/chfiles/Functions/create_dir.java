@@ -69,7 +69,7 @@ public class create_dir extends AbstractFunction {
 
     @Override
     public String docs() {
-        return "{file} void creates a dir.";
+        return "void {dir} Create a new directory.";
     }
 
     @Override

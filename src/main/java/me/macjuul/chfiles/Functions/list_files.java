@@ -54,7 +54,7 @@ public class list_files extends AbstractFunction {
                 ret.push(new CString(file, t), t);
             }
         } else {
-            throw new CREIOException("This path is not directory.", t);
+            throw new CREIOException("This path is not a directory.", t);
         }
         return ret;
     }
@@ -71,7 +71,7 @@ public class list_files extends AbstractFunction {
 
     @Override
     public String docs() {
-        return "{directory} array return files in directory.";
+        return "array {dir} Lists all files and directories in given directory";
     }
 
     @Override

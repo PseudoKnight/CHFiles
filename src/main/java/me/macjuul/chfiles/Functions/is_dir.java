@@ -59,7 +59,7 @@ public class is_dir extends AbstractFunction {
 
     @Override
     public String docs() {
-        return "{file} boolean if file is directory, returns true.";
+        return "boolean {path} Checks if a path is a directory.";
     }
 
     @Override
