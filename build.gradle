@@ -15,10 +15,10 @@ repositories {
 }
 
 dependencies {
-    compile('org.spigotmc:spigot-api:1.13.1-R0.1-SNAPSHOT') {
+    compile('org.spigotmc:spigot-api:1.13.2-R0.1-SNAPSHOT') {
         exclude module: 'bungeecord-chat'
     }
-    compile('com.sk89q:commandhelper:3.3.3-SNAPSHOT') {
+    compile('com.sk89q:commandhelper:3.3.4-SNAPSHOT') {
         exclude module: 'spigot-api'
     }
     compile group: 'commons-io', name: 'commons-io', version: '2.5'
