@@ -9,7 +9,7 @@ import com.laytonsmith.core.extensions.MSExtension;
 @MSExtension("CHFiles")
 public class LifeCycle extends AbstractExtension {
 	public Version getVersion() {
-		return new SimpleVersion(2, 2, 3, "SNAPSHOT");
+		return new SimpleVersion(2, 2, 3);
 	}
 
 

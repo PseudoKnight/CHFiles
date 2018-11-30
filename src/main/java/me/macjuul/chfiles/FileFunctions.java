@@ -29,7 +29,7 @@ public class FileFunctions {
 		return "A set of functions for interacting with files and directories.";
 	}
 
-	public abstract class FileFunction extends AbstractFunction {
+	public static abstract class FileFunction extends AbstractFunction {
 		@Override
 		public MSVersion since() {
 			return MSVersion.V3_3_2;
@@ -52,7 +52,7 @@ public class FileFunctions {
 	}
 
 	@api
-	public class async_read_file extends FileFunction {
+	public static class async_read_file extends FileFunction {
 
 		@Override
 		public String getName() {
@@ -138,7 +138,7 @@ public class FileFunctions {
 	}
 
 	@api
-	public class async_write_file extends FileFunction {
+	public static class async_write_file extends FileFunction {
 
 		@Override
 		public String getName() {
@@ -194,7 +194,7 @@ public class FileFunctions {
 	}
 
 	@api
-	public class copy_file extends FileFunction {
+	public static class copy_file extends FileFunction {
 
 		@Override
 		public String getName() {
@@ -233,7 +233,7 @@ public class FileFunctions {
 	}
 
 	@api
-	public class create_dir extends FileFunction {
+	public static class create_dir extends FileFunction {
 
 		@Override
 		public String getName() {
@@ -270,7 +270,7 @@ public class FileFunctions {
 	}
 
 	@api
-	public class create_file extends FileFunction {
+	public static class create_file extends FileFunction {
 
 		@Override
 		public String getName() {
@@ -307,7 +307,7 @@ public class FileFunctions {
 	}
 
 	@api
-	public class delete_file extends FileFunction {
+	public static class delete_file extends FileFunction {
 
 		@Override
 		public String getName() {
@@ -348,7 +348,7 @@ public class FileFunctions {
 	}
 
 	@api
-	public class file_exists extends FileFunction {
+	public static class file_exists extends FileFunction {
 
 		@Override
 		public String getName() {
@@ -377,7 +377,7 @@ public class FileFunctions {
 	}
 
 	@api
-	public class get_absolute_path extends FileFunction {
+	public static class get_absolute_path extends FileFunction {
 
 		@Override
 		public String getName() {
@@ -406,7 +406,7 @@ public class FileFunctions {
 	}
 
 	@api
-	public class is_dir extends FileFunction {
+	public static class is_dir extends FileFunction {
 
 		@Override
 		public String getName() {
@@ -435,7 +435,7 @@ public class FileFunctions {
 	}
 
 	@api
-	public class is_file extends FileFunction {
+	public static class is_file extends FileFunction {
 
 		@Override
 		public String getName() {
@@ -464,7 +464,7 @@ public class FileFunctions {
 	}
 
 	@api
-	public class list_files extends FileFunction {
+	public static class list_files extends FileFunction {
 
 		@Override
 		public String getName() {
@@ -502,7 +502,7 @@ public class FileFunctions {
 	}
 
 	@api
-	public class rename_file extends FileFunction {
+	public static class rename_file extends FileFunction {
 
 		@Override
 		public String getName() {
@@ -539,7 +539,7 @@ public class FileFunctions {
 	}
 
 	@api
-	public class ungz_file extends FileFunction {
+	public static class ungz_file extends FileFunction {
 
 		@Override
 		public String getName() {
@@ -593,7 +593,7 @@ public class FileFunctions {
 	}
 
 	@api
-	public class write_file extends FileFunction {
+	public static class write_file extends FileFunction {
 
 		@Override
 		public String getName() {
