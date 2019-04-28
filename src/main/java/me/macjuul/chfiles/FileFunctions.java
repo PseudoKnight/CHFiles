@@ -89,7 +89,7 @@ public class FileFunctions {
 			} else {
 				callback = Static.getObject(args[1], t, CClosure.class);
 			}
-			if (!Static.InCmdLine(environment)) {
+			if (!Static.InCmdLine(environment, true)) {
 				if (!Security.CheckSecurity(file)) {
 					throw new CRESecurityException("You do not have permission to access the file '" + file + "'", t);
 				}
