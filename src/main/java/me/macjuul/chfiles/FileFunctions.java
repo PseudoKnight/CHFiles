@@ -15,7 +15,7 @@ import com.laytonsmith.core.exceptions.CRE.*;
 import com.laytonsmith.core.exceptions.ConfigRuntimeException;
 import com.laytonsmith.core.functions.AbstractFunction;
 import com.laytonsmith.core.natives.interfaces.Mixed;
-import org.apache.commons.io.FileUtils;
+import com.laytonsmith.libs.org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.FileInputStream;
