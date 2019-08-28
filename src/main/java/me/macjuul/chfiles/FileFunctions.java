@@ -553,7 +553,7 @@ public class FileFunctions {
 
 		@Override
 		public String docs() {
-			return "void (gzfile, tofile) Unzip a file and write it to another file.";
+			return "void {gzfile, tofile} Unzip a file and write it to another file.";
 		}
 
 		@Override
@@ -583,7 +583,7 @@ public class FileFunctions {
 				e.printStackTrace();
 			}
 
-			return null;
+			return CVoid.VOID;
 		}
 
 		@Override
