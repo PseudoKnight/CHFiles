@@ -81,7 +81,7 @@ public class FileFunctions {
 		}
 		
 		@Override
-		public Mixed exec(final Target t, final Environment environment, Mixed... args) throws ConfigRuntimeException {
+		public Mixed exec(final Target t, final Environment env, Mixed... args) throws ConfigRuntimeException {
 			final String file = args[0].val();
 			final CClosure callback;
 			if (!(args[1] instanceof CClosure)) {
@@ -89,10 +89,12 @@ public class FileFunctions {
 			} else {
 				callback = Static.getObject(args[1], t, CClosure.class);
 			}
-			if (!Static.InCmdLine(environment, true)) {
-				if (!Security.CheckSecurity(file)) {
+			try {
+				if (!Static.InCmdLine(env, true) && !Security.CheckSecurity(file)) {
 					throw new CRESecurityException("You do not have permission to access the file '" + file + "'", t);
 				}
+			} catch (IOException e) {
+				throw new CREIOException(e.getMessage(), t);
 			}
 			new Thread(() -> {
 				String returnString = null;
@@ -107,7 +109,7 @@ public class FileFunctions {
 				} else {
 					try {
 						//It's a local file read
-						File _file = Static.GetFileFromArgument(file, environment, t, null);
+						File _file = Static.GetFileFromArgument(file, env, t, null);
 						returnString = FileUtil.read(_file);
 					} catch (IOException ex) {
 						exception = new CREIOException(ex.getMessage(), t, ex);
@@ -123,10 +125,10 @@ public class FileFunctions {
 				if (exception == null) {
 					cex = CNull.NULL;
 				} else {
-					cex = ObjectGenerator.GetGenerator().exception(exception, environment, t);
+					cex = ObjectGenerator.GetGenerator().exception(exception, env, t);
 				}
-				StaticLayer.GetConvertor().runOnMainThreadLater(environment.getEnv(GlobalEnv.class).GetDaemonManager(), () ->
-						callback.execute(cret, cex));
+				StaticLayer.GetConvertor().runOnMainThreadLater(env.getEnv(GlobalEnv.class).GetDaemonManager(), () ->
+						callback.executeCallable(cret, cex));
 			}).start();
 			return CVoid.VOID;
 		}
@@ -160,10 +162,13 @@ public class FileFunctions {
 		@Override
 		public Mixed exec(final Target t, final Environment env, final Mixed... args) throws ConfigRuntimeException {
 			final File loc = Static.GetFileFromArgument(args[0].val(), env, t, null);
-			if (!Security.CheckSecurity(loc)) {
-				throw new CRESecurityException("You do not have permission to access the file '" + loc.getAbsolutePath() + "'", t);
+			try {
+				if (!Static.InCmdLine(env, true) && !Security.CheckSecurity(loc)) {
+					throw new CRESecurityException("You do not have permission to access the file '" + loc + "'", t);
+				}
+			} catch (IOException e) {
+				throw new CREIOException(e.getMessage(), t);
 			}
-
 			new Thread(() -> {
 				try {
 					if (!loc.exists()) {
@@ -177,7 +182,7 @@ public class FileFunctions {
 
 					if (args.length >= 4) {
 						final CClosure closure = Static.getObject(args[3], t, CClosure.class);
-						StaticLayer.GetConvertor().runOnMainThreadLater(env.getEnv(GlobalEnv.class).GetDaemonManager(), closure::execute);
+						StaticLayer.GetConvertor().runOnMainThreadLater(env.getEnv(GlobalEnv.class).GetDaemonManager(), closure::executeCallable);
 					}
 				} catch (IOException e) {
 					throw new CREIOException("File could not be written.", t);
@@ -215,10 +220,10 @@ public class FileFunctions {
 		public Mixed exec(Target t, Environment env, Mixed... args) throws ConfigRuntimeException {
 			File fromLoc = Static.GetFileFromArgument(args[0].val(), env, t, null);
 			File toLoc = Static.GetFileFromArgument(args[1].val(), env, t, null);
-			if (!Security.CheckSecurity(fromLoc) || !Security.CheckSecurity(toLoc)) {
-				throw new CRESecurityException("You do not have access to some of the files", t);
-			}
 			try {
+				if (!Static.InCmdLine(env, true) && (!Security.CheckSecurity(fromLoc) || !Security.CheckSecurity(toLoc))) {
+					throw new CRESecurityException("You do not have access to some of the files", t);
+				}
 				if (fromLoc.isDirectory()) {
 					FileUtils.copyDirectory(fromLoc, toLoc);
 				} else if (fromLoc.isFile()) {
@@ -226,7 +231,7 @@ public class FileFunctions {
 				}
 				return CVoid.VOID;
 			} catch (IOException e) {
-				throw new CREIOException("File could not be written in.", t);
+				throw new CREIOException(e.getMessage(), t);
 			}
 		}
 
@@ -253,17 +258,17 @@ public class FileFunctions {
 		@Override
 		public Mixed exec(Target t, Environment env, Mixed... args) throws ConfigRuntimeException {
 			File loc = Static.GetFileFromArgument(args[0].val(), env, t, null);
-			if (!Security.CheckSecurity(loc)) {
-				throw new CRESecurityException("You do not have permission to access the file '" + loc.getAbsolutePath() + "'", t);
-			}
 			try {
+				if (!Static.InCmdLine(env, true) && !Security.CheckSecurity(loc)) {
+					throw new CRESecurityException("You do not have permission to access the file '" + loc.getAbsolutePath() + "'", t);
+				}
 				if (loc.exists()) {
 					throw new CREIOException(loc.getAbsolutePath() + "Already Exists", t);
 				}
 				loc.mkdir();
 				return CVoid.VOID;
 			} catch (Exception e) {
-				throw new CREIOException("Directory could not be created.", t);
+				throw new CREIOException(e.getMessage(), t);
 			}
 		}
 
@@ -290,17 +295,17 @@ public class FileFunctions {
 		@Override
 		public Mixed exec(Target t, Environment env, Mixed... args) throws ConfigRuntimeException {
 			File loc = Static.GetFileFromArgument(args[0].val(), env, t, null);
-			if (!Security.CheckSecurity(loc)) {
-				throw new CRESecurityException("You do not have permission to access the file '" + loc.getAbsolutePath() + "'", t);
-			}
 			try {
+				if (!Static.InCmdLine(env, true) && !Security.CheckSecurity(loc)) {
+					throw new CRESecurityException("You do not have permission to access the file '" + loc.getAbsolutePath() + "'", t);
+				}
 				if (loc.exists()) {
 					throw new CREIOException(loc.getAbsolutePath() + " already exists", t);
 				}
 				loc.createNewFile();
 				return CVoid.VOID;
 			} catch (IOException e) {
-				throw new CREIOException("File could not be created.", t);
+				throw new CREIOException(e.getMessage(), t);
 			}
 		}
 		
@@ -327,10 +332,10 @@ public class FileFunctions {
 		@Override
 		public Mixed exec(Target t, Environment env, Mixed... args) throws ConfigRuntimeException {
 			File loc = Static.GetFileFromArgument(args[0].val(), env, t, null);
-			if (!Security.CheckSecurity(loc)) {
-				throw new CRESecurityException("You do not have permission to access the file '" + loc.getAbsolutePath() + "'", t);
-			}
 			try {
+				if (!Static.InCmdLine(env, true) && !Security.CheckSecurity(loc)) {
+					throw new CRESecurityException("You do not have permission to access the file '" + loc.getAbsolutePath() + "'", t);
+				}
 				if (!loc.exists()) {
 					throw new CREIOException(loc.getAbsolutePath() + "Doesn't exists", t);
 				}
@@ -341,7 +346,7 @@ public class FileFunctions {
 				}
 				return CVoid.VOID;
 			} catch (IOException e) {
-				throw new CREIOException("File could not be deleted.", t);
+				throw new CREIOException(e.getMessage(), t);
 			}
 		}
 
@@ -368,8 +373,12 @@ public class FileFunctions {
 		@Override
 		public Mixed exec(Target t, Environment env, Mixed... args) throws ConfigRuntimeException {
 			File loc = Static.GetFileFromArgument(args[0].val(), env, t, null);
-			if (!Security.CheckSecurity(loc)) {
-				throw new CRESecurityException("You do not have permission to access the file '" + loc.getAbsolutePath() + "'", t);
+			try {
+				if (!Static.InCmdLine(env, true) && !Security.CheckSecurity(loc)) {
+					throw new CRESecurityException("You do not have permission to access the file '" + loc.getAbsolutePath() + "'", t);
+				}
+			} catch (IOException e) {
+				throw new CREIOException(e.getMessage(), t);
 			}
 			return CBoolean.get(loc.exists());
 		}
@@ -426,8 +435,12 @@ public class FileFunctions {
 		@Override
 		public Mixed exec(Target t, Environment env, Mixed... args) throws ConfigRuntimeException {
 			File loc = Static.GetFileFromArgument(args[0].val(), env, t, null);
-			if (!Security.CheckSecurity(loc)) {
-				throw new CRESecurityException("You do not have permission to access the file '" + loc.getAbsolutePath() + "'", t);
+			try {
+				if (!Static.InCmdLine(env, true) && !Security.CheckSecurity(loc)) {
+					throw new CRESecurityException("You do not have permission to access the file '" + loc.getAbsolutePath() + "'", t);
+				}
+			} catch (IOException e) {
+				throw new CREIOException(e.getMessage(), t);
 			}
 			return CBoolean.get(loc.isDirectory());
 		}
@@ -455,8 +468,12 @@ public class FileFunctions {
 		@Override
 		public Mixed exec(Target t, Environment env, Mixed... args) throws ConfigRuntimeException {
 			File loc = Static.GetFileFromArgument(args[0].val(), env, t, null);
-			if (!Security.CheckSecurity(loc)) {
-				throw new CRESecurityException("You do not have permission to access the file '" + loc.getAbsolutePath() + "'", t);
+			try {
+				if (!Static.InCmdLine(env, true) && !Security.CheckSecurity(loc)) {
+					throw new CRESecurityException("You do not have permission to access the file '" + loc.getAbsolutePath() + "'", t);
+				}
+			} catch (IOException e) {
+				throw new CREIOException(e.getMessage(), t);
 			}
 			return CBoolean.get(loc.isFile());
 		}
@@ -484,8 +501,12 @@ public class FileFunctions {
 		@Override
 		public Mixed exec(Target t, Environment env, Mixed... args) throws ConfigRuntimeException {
 			File loc = Static.GetFileFromArgument(args[0].val(), env, t, null);
-			if (!Security.CheckSecurity(loc)) {
-				throw new CRESecurityException("You do not have permission to access the file '" + loc.getAbsolutePath() + "'", t);
+			try {
+				if (!Static.InCmdLine(env, true) && !Security.CheckSecurity(loc)) {
+					throw new CRESecurityException("You do not have permission to access the file '" + loc.getAbsolutePath() + "'", t);
+				}
+			} catch (IOException e) {
+				throw new CREIOException(e.getMessage(), t);
 			}
 			CArray ret = new CArray(t);
 			if (loc.exists() && loc.isDirectory()) {
@@ -522,8 +543,12 @@ public class FileFunctions {
 		@Override
 		public Mixed exec(Target t, Environment env, Mixed... args) throws ConfigRuntimeException {
 			File loc = Static.GetFileFromArgument(args[0].val(), env, t, null);
-			if (!Security.CheckSecurity(loc)) {
-				throw new CRESecurityException("You do not have permission to access the file '" + loc.getAbsolutePath() + "'", t);
+			try {
+				if (!Static.InCmdLine(env, true) && !Security.CheckSecurity(loc)) {
+					throw new CRESecurityException("You do not have permission to access the file '" + loc.getAbsolutePath() + "'", t);
+				}
+			} catch (IOException e) {
+				throw new CREIOException(e.getMessage(), t);
 			}
 			if (!loc.exists()) {
 				throw new CREIOException(loc.getAbsolutePath() + " doesn't exist", t);
@@ -563,6 +588,10 @@ public class FileFunctions {
 			File tofile = Static.GetFileFromArgument(args[1].val(), env, t, null);
 
 			try {
+				if (!Static.InCmdLine(env, true) && (!Security.CheckSecurity(gz) || !Security.CheckSecurity(tofile))) {
+					throw new CRESecurityException("You do not have access to some of the files", t);
+				}
+
 				FileInputStream fis = new FileInputStream(gz);
 				GZIPInputStream gzis = new GZIPInputStream(fis);
 
@@ -579,8 +608,8 @@ public class FileFunctions {
 				gzis.close();
 				fis.close();
 
-			} catch (Exception e) {
-				e.printStackTrace();
+			} catch (IOException e) {
+				throw new CREIOException(e.getMessage(), t);
 			}
 
 			return CVoid.VOID;
@@ -614,12 +643,11 @@ public class FileFunctions {
 		@Override
 		public Mixed exec(Target t, Environment env, Mixed... args) throws ConfigRuntimeException {
 			File loc = Static.GetFileFromArgument(args[0].val(), env, t, null);
-			if (!Security.CheckSecurity(loc)) {
-				throw new CRESecurityException("You do not have permission to access the file '" + loc.getAbsolutePath() + "'", t);
-			}
 			try {
+				if (!Static.InCmdLine(env, true) && !Security.CheckSecurity(loc)) {
+					throw new CRESecurityException("You do not have permission to access the file '" + loc.getAbsolutePath() + "'", t);
+				}
 				if (!loc.exists()) {
-//                throw new CREIOException(loc.getAbsolutePath() + "Doesn't exists", t);
 					loc.createNewFile();
 				}
 				if (args.length >= 3 && args[2].val().toUpperCase().equals("OVERWRITE")) {
@@ -630,7 +658,7 @@ public class FileFunctions {
 
 				return CVoid.VOID;
 			} catch (IOException e) {
-				throw new CREIOException("File could not be written.", t);
+				throw new CREIOException(e.getMessage(), t);
 			}
 		}
 
