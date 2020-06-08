@@ -4,6 +4,7 @@ import com.laytonsmith.PureUtilities.Common.FileUtil;
 import com.laytonsmith.PureUtilities.SSHWrapper;
 import com.laytonsmith.abstraction.StaticLayer;
 import com.laytonsmith.annotations.api;
+import com.laytonsmith.core.ArgumentValidation;
 import com.laytonsmith.core.MSVersion;
 import com.laytonsmith.core.ObjectGenerator;
 import com.laytonsmith.core.Security;
@@ -87,7 +88,7 @@ public class FileFunctions {
 			if (!(args[1] instanceof CClosure)) {
 				throw new CRECastException("Expected parameter 2 of " + getName() + " to be a closure!", t);
 			} else {
-				callback = Static.getObject(args[1], t, CClosure.class);
+				callback = ArgumentValidation.getObject(args[1], t, CClosure.class);
 			}
 			try {
 				if (!Static.InCmdLine(env, true) && !Security.CheckSecurity(file)) {
