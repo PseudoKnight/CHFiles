@@ -12,6 +12,7 @@ import com.laytonsmith.core.Static;
 import com.laytonsmith.core.constructs.*;
 import com.laytonsmith.core.environments.Environment;
 import com.laytonsmith.core.environments.GlobalEnv;
+import com.laytonsmith.core.environments.StaticRuntimeEnv;
 import com.laytonsmith.core.exceptions.CRE.*;
 import com.laytonsmith.core.exceptions.ConfigRuntimeException;
 import com.laytonsmith.core.functions.AbstractFunction;
@@ -128,7 +129,7 @@ public class FileFunctions {
 				} else {
 					cex = ObjectGenerator.GetGenerator().exception(exception, env, t);
 				}
-				StaticLayer.GetConvertor().runOnMainThreadLater(env.getEnv(GlobalEnv.class).GetDaemonManager(), () ->
+				StaticLayer.GetConvertor().runOnMainThreadLater(env.getEnv(StaticRuntimeEnv.class).GetDaemonManager(), () ->
 						callback.executeCallable(cret, cex));
 			}).start();
 			return CVoid.VOID;
@@ -182,8 +183,8 @@ public class FileFunctions {
 					}
 
 					if (args.length >= 4) {
-						final CClosure closure = Static.getObject(args[3], t, CClosure.class);
-						StaticLayer.GetConvertor().runOnMainThreadLater(env.getEnv(GlobalEnv.class).GetDaemonManager(), closure::executeCallable);
+						final CClosure closure = ArgumentValidation.getObject(args[3], t, CClosure.class);
+						StaticLayer.GetConvertor().runOnMainThreadLater(env.getEnv(StaticRuntimeEnv.class).GetDaemonManager(), closure::executeCallable);
 					}
 				} catch (IOException e) {
 					throw new CREIOException("File could not be written.", t);
