@@ -93,7 +93,7 @@ public class FileFunctions {
 				if (!Static.InCmdLine(env, true) && !Security.CheckSecurity(file)) {
 					throw new CRESecurityException("You do not have permission to access the file '" + file + "'", t);
 				}
-			} catch (IOException e) {
+			} catch (Exception e) {
 				throw new CREIOException(e.getMessage(), t);
 			}
 			new Thread(() -> {
@@ -166,7 +166,7 @@ public class FileFunctions {
 				if (!Static.InCmdLine(env, true) && !Security.CheckSecurity(loc)) {
 					throw new CRESecurityException("You do not have permission to access the file '" + loc + "'", t);
 				}
-			} catch (IOException e) {
+			} catch (Exception e) {
 				throw new CREIOException(e.getMessage(), t);
 			}
 			new Thread(() -> {
@@ -377,7 +377,7 @@ public class FileFunctions {
 				if (!Static.InCmdLine(env, true) && !Security.CheckSecurity(loc)) {
 					throw new CRESecurityException("You do not have permission to access the file '" + loc.getAbsolutePath() + "'", t);
 				}
-			} catch (IOException e) {
+			} catch (Exception e) {
 				throw new CREIOException(e.getMessage(), t);
 			}
 			return CBoolean.get(loc.exists());
@@ -439,7 +439,7 @@ public class FileFunctions {
 				if (!Static.InCmdLine(env, true) && !Security.CheckSecurity(loc)) {
 					throw new CRESecurityException("You do not have permission to access the file '" + loc.getAbsolutePath() + "'", t);
 				}
-			} catch (IOException e) {
+			} catch (Exception e) {
 				throw new CREIOException(e.getMessage(), t);
 			}
 			return CBoolean.get(loc.isDirectory());
@@ -472,7 +472,7 @@ public class FileFunctions {
 				if (!Static.InCmdLine(env, true) && !Security.CheckSecurity(loc)) {
 					throw new CRESecurityException("You do not have permission to access the file '" + loc.getAbsolutePath() + "'", t);
 				}
-			} catch (IOException e) {
+			} catch (Exception e) {
 				throw new CREIOException(e.getMessage(), t);
 			}
 			return CBoolean.get(loc.isFile());
@@ -505,7 +505,7 @@ public class FileFunctions {
 				if (!Static.InCmdLine(env, true) && !Security.CheckSecurity(loc)) {
 					throw new CRESecurityException("You do not have permission to access the file '" + loc.getAbsolutePath() + "'", t);
 				}
-			} catch (IOException e) {
+			} catch (Exception e) {
 				throw new CREIOException(e.getMessage(), t);
 			}
 			CArray ret = new CArray(t);
@@ -547,7 +547,7 @@ public class FileFunctions {
 				if (!Static.InCmdLine(env, true) && !Security.CheckSecurity(loc)) {
 					throw new CRESecurityException("You do not have permission to access the file '" + loc.getAbsolutePath() + "'", t);
 				}
-			} catch (IOException e) {
+			} catch (Exception e) {
 				throw new CREIOException(e.getMessage(), t);
 			}
 			if (!loc.exists()) {
