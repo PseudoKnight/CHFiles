@@ -1,6 +1,6 @@
 CHFiles is a CommandHelper extension that allows you to work with files and directories.
 
-Requires CommandHelper 3.3.4 build #3978 or later.
+Requires CommandHelper 3.3.4 or later.
 
 # Functions:
 
