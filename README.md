@@ -14,11 +14,13 @@ Requires CommandHelper 3.3.4 or later.
 
 * void **rename_file(File, Name)** - Renames a file.
 
-* void **write_file(PathToFile, content, [mode])** - Writes text to a file. 
+* void **ungz_file(GZFile, ToFile)** - Unzip a file and write it to another file.
+
+* void **write_file(PathToFile, content, [mode])** - Writes text to a file.  
   The mode parameter can be OVERWRITE or APPEND.
 
-* void **async_write_file(PathToFile, content, [mode], [callback])** - Writes text to a file asynchronously.
-  The mode parameter can be OVERWRITE or APPEND.  The optional callback must be a closure. 
+* void **async_write_file(PathToFile, content, [mode], [callback])** - Writes text to a file asynchronously.  
+  The mode parameter can be OVERWRITE or APPEND.  The optional callback must be a closure.  
   It will be executed upon write completion.
 
 * void **async_read_file(PathToFile, callback)** - Asynchronously reads in a file.
