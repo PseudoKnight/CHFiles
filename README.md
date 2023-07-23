@@ -1,8 +1,11 @@
 CHFiles is a CommandHelper extension that allows you to work with files and directories.
 
-Requires CommandHelper 3.3.4 or later.
+## Compatibility and Downloads
 
-# Functions:
+[CHFiles 2.2.8](https://letsbuild.net/jenkins/job/CHFiles/lastSuccessfulBuild/) for CommandHelper 3.3.5  
+[CHFiles 2.2.7](https://letsbuild.net/jenkins/job/CHFiles/31/) for CommandHelper 3.3.4
+
+## Functions:
 
 * void **copy_file(FromFile, ToFile)** - Copies a file or directory to another directory.
 
