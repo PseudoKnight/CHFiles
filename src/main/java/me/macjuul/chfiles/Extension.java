@@ -8,11 +8,9 @@ import com.laytonsmith.core.Static;
 import com.laytonsmith.core.extensions.AbstractExtension;
 import com.laytonsmith.core.extensions.MSExtension;
 
-import java.util.logging.Level;
-
 @MSExtension("CHFiles")
 public class Extension extends AbstractExtension {
-	private final Version VERSION = new SimpleVersion(2, 2, 7);
+	private final Version VERSION = new SimpleVersion(2, 2, 8);
 
 	public Version getVersion() {
 		return VERSION;
@@ -21,14 +19,14 @@ public class Extension extends AbstractExtension {
 	@Override
 	public void onStartup() {
 		if(!Implementation.GetServerType().equals(Implementation.Type.SHELL)) {
-			Static.getLogger().log(Level.INFO, "CHFiles " + getVersion() + " loaded.");
+			Static.getLogger().info("CHFiles " + getVersion() + " loaded.");
 		}
 	}
 
 	@Override
 	public void onShutdown() {
 		if(!Implementation.GetServerType().equals(Implementation.Type.SHELL)) {
-			Static.getLogger().log(Level.INFO, "CHFiles " + getVersion() + " unloaded.");
+			Static.getLogger().info("CHFiles " + getVersion() + " unloaded.");
 		}
 	}
 }

@@ -174,7 +174,7 @@ public class FileFunctions {
 					if (!loc.exists()) {
 						loc.createNewFile();
 					}
-					if (args.length >= 3 && args[2].val().toUpperCase().equals("OVERWRITE")) {
+					if (args.length >= 3 && args[2].val().equalsIgnoreCase("OVERWRITE")) {
 						FileUtil.write(args[1].val(), loc, 0);
 					} else {
 						FileUtil.write(args[1].val(), loc, 1);
@@ -650,7 +650,7 @@ public class FileFunctions {
 				if (!loc.exists()) {
 					loc.createNewFile();
 				}
-				if (args.length >= 3 && args[2].val().toUpperCase().equals("OVERWRITE")) {
+				if (args.length >= 3 && args[2].val().equalsIgnoreCase("OVERWRITE")) {
 					FileUtil.write(args[1].val(), loc, 0);
 				} else {
 					FileUtil.write(args[1].val(), loc, 1);
