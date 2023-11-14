@@ -2,7 +2,7 @@ CHFiles is a CommandHelper extension that allows you to work with files and dire
 
 ## Compatibility and Downloads
 
-[CHFiles 2.2.8](https://letsbuild.net/jenkins/job/CHFiles/lastSuccessfulBuild/) for CommandHelper 3.3.5  
+[CHFiles 2.3.0](https://letsbuild.net/jenkins/job/CHFiles/lastSuccessfulBuild/) for CommandHelper 3.3.5  
 [CHFiles 2.2.7](https://letsbuild.net/jenkins/job/CHFiles/31/) for CommandHelper 3.3.4
 
 ## Functions:
@@ -23,8 +23,7 @@ CHFiles is a CommandHelper extension that allows you to work with files and dire
   The mode parameter can be OVERWRITE or APPEND.
 
 * void **async_write_file(PathToFile, content, [mode], [callback])** - Writes text to a file asynchronously.  
-  The mode parameter can be OVERWRITE or APPEND.  The optional callback must be a closure.  
-  It will be executed upon write completion.
+  The mode parameter can be OVERWRITE or APPEND. The optional callback must be a closure. It will be executed upon write completion.
 
 * void **async_read_file(PathToFile, callback)** - Asynchronously reads in a file.
   Check [here](https://methodscript.com/docs/3.3.3/API/functions/async_read).
@@ -35,7 +34,9 @@ CHFiles is a CommandHelper extension that allows you to work with files and dire
 
 * boolean **is_dir(PathToFile)** - Checks if a path is a directory.
 
-* boolean  **is_file(PathToFile)** - Checks if a path is a file.
+* boolean **is_file(PathToFile)** - Checks if a path is a file.
 
-* string  **get_absolute_path([Path])** - Gets the absolute path of a file, 
-  or this script file if none is specified.
+* string **get_absolute_path([Path])** - Gets the absolute path of a file, or this script file if none is specified.
+
+* int **file_last_modified(PathToFile)** - Returns the time a file was last modified as a unix time stamp.  
+  Will return 0 if the file does not exist or an I/O error occurs.

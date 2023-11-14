@@ -664,4 +664,37 @@ public class FileFunctions {
 
 	}
 
+	@api
+	public static class file_last_modified extends FileFunction {
+
+		@Override
+		public String getName() {
+			return "file_last_modified";
+		}
+
+		@Override
+		public Integer[] numArgs() {
+			return new Integer[]{1};
+		}
+
+		@Override
+		public String docs() {
+			return "int {file} Returns the time a file was last modified as a unix time stamp."
+					+ " Will return 0 if the file does not exist or an I/O error occurs.";
+		}
+
+		@Override
+		public Mixed exec(Target t, Environment env, Mixed... args) throws ConfigRuntimeException {
+			File loc = Static.GetFileFromArgument(args[0].val(), env, t, null);
+			try {
+				if (!Static.InCmdLine(env, true) && !Security.CheckSecurity(loc)) {
+					throw new CRESecurityException("You do not have permission to access the file '" + loc.getAbsolutePath() + "'", t);
+				}
+				return new CInt(loc.lastModified(), t);
+			} catch (IOException e) {
+				throw new CREIOException(e.getMessage(), t);
+			}
+		}
+	}
+
 }
