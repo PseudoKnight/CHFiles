@@ -10,7 +10,7 @@ import com.laytonsmith.core.extensions.MSExtension;
 
 @MSExtension("CHFiles")
 public class Extension extends AbstractExtension {
-	private final Version VERSION = new SimpleVersion(2, 3, 0);
+	private final Version VERSION = new SimpleVersion(2, 3, 1);
 
 	public Version getVersion() {
 		return VERSION;
