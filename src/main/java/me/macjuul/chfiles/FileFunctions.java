@@ -155,7 +155,8 @@ public class FileFunctions {
 
 		@Override
 		public String docs() {
-			return "void {file, string, [mode], [callback]} Writes text to a file asynchronously."
+			return "void {file, content, [mode], [callback]} Writes data to a file asynchronously."
+					+ " Accepts a byte array or a string as the content."
 					+ " The mode parameter can be OVERWRITE or APPEND."
 					+ " The optional callback must be a closure. It will be executed upon write completion.";
 		}
@@ -175,10 +176,16 @@ public class FileFunctions {
 					if (!loc.exists()) {
 						loc.createNewFile();
 					}
-					if (args.length >= 3 && args[2].val().equalsIgnoreCase("OVERWRITE")) {
-						FileUtil.write(args[1].val(), loc, 0);
+					byte[] content;
+					if(args[1].isInstanceOf(CByteArray.TYPE)) {
+						content = ArgumentValidation.getByteArray(args[1], t).asByteArrayCopy();
 					} else {
-						FileUtil.write(args[1].val(), loc, 1);
+						content = args[1].val().getBytes(StandardCharsets.UTF_8);
+					}
+					if (args.length >= 3 && args[2].val().equalsIgnoreCase("OVERWRITE")) {
+						FileUtil.write(content, loc, 0, false);
+					} else {
+						FileUtil.write(content, loc, 1, false);
 					}
 
 					if (args.length >= 4) {
@@ -637,7 +644,7 @@ public class FileFunctions {
 
 		@Override
 		public String docs() {
-			return "void {file, content, [mode]} Writes text to a file."
+			return "void {file, content, [mode]} Writes data to a file."
 					+ " Accepts a byte array or a string as the content."
 					+ " The mode parameter can be OVERWRITE or APPEND.";
 		}

@@ -19,11 +19,13 @@ CHFiles is a CommandHelper extension that allows you to work with files and dire
 
 * void **ungz_file(GZFile, ToFile)** - Unzip a file and write it to another file.
 
-* void **write_file(PathToFile, content, [mode])** - Writes text to a file.  
+* void **write_file(PathToFile, content, [mode])** - Writes data to a file.  
+  Accepts a byte array or a string as the content.  
   The mode parameter can be OVERWRITE or APPEND.
 
-* void **async_write_file(PathToFile, content, [mode], [callback])** - Writes text to a file asynchronously.  
-  The mode parameter can be OVERWRITE or APPEND. The optional callback must be a closure. It will be executed upon write completion.
+* void **async_write_file(PathToFile, content, [mode], [callback])** - Writes data to a file asynchronously.  
+  Accepts a byte array or a string as the content.  
+* The mode parameter can be OVERWRITE or APPEND. The optional callback must be a closure. It will be executed upon write completion.
 
 * void **async_read_file(PathToFile, callback)** - Asynchronously reads in a file.
   Check [here](https://methodscript.com/docs/3.3.3/API/functions/async_read).
